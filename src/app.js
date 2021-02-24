@@ -23,7 +23,7 @@ app.use(helmet())
 app.use(cors())
 
 app.get('/', (req, res) => {
-    console.log("hello world")
+    res.send("hello world")
 })
 
 app.post('/', jsonParser,(req, res) => {
