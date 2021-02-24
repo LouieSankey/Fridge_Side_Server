@@ -5,10 +5,10 @@ const cors = require('cors')
 const helmet = require('helmet')
 const { NODE_ENV } = require('./config')
 const jsonParser = express.json()
+const config = require('./config')
 
-
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
+const accountSid = config.TWILIO_ACCOUNT_SID;
+const authToken = config.TWILIO_AUTH_TOKEN;
 
 const client = require('twilio')(accountSid, authToken);
 
@@ -29,7 +29,7 @@ app.post('/', jsonParser,(req, res) => {
     client.messages
     .create({
         body: "Your shopping list from Fridge-Side is : \n\n" + shoppingList,
-        from: process.env.phone,
+        from: config.PHONE,
         to: phone
     })
     .then(message =>  res.send(message));
