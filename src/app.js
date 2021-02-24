@@ -7,10 +7,10 @@ const { NODE_ENV } = require('./config')
 const jsonParser = express.json()
 const config = require('./config')
 
-const accountSid = config.TWILIO_ACCOUNT_SID;
-const authToken = config.TWILIO_AUTH_TOKEN;
+// const accountSid = config.TWILIO_ACCOUNT_SID;
+// const authToken = config.TWILIO_AUTH_TOKEN;
 
-const client = require('twilio')(accountSid, authToken);
+// const client = require('twilio')(accountSid, authToken);
 
 const app = express()
 
@@ -22,21 +22,21 @@ app.use(morgan(morganOption))
 app.use(helmet())
 app.use(cors())
 
-app.post('/', jsonParser,(req, res) => {
-    const shoppingList = req.body.shopping_list
-    const phone = req.body.phone
+// app.post('/', jsonParser,(req, res) => {
+//     const shoppingList = req.body.shopping_list
+//     const phone = req.body.phone
 
-    client.messages
-    .create({
-        body: "Your shopping list from Fridge-Side is : \n\n" + shoppingList,
-        from: config.PHONE,
-        to: phone
-    })
-    .then(message =>  res.send(message));
+//     client.messages
+//     .create({
+//         body: "Your shopping list from Fridge-Side is : \n\n" + shoppingList,
+//         from: config.PHONE,
+//         to: phone
+//     })
+//     .then(message =>  res.send(message));
 
-    //send from twillio here
+//     //send from twillio here
    
- })
+//  })
 
   app.use(function errorHandler(error, req, res, next) {
     let response
