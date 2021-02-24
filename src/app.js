@@ -7,10 +7,10 @@ const { NODE_ENV } = require('./config')
 const jsonParser = express.json()
 const config = require('./config')
 
-// const accountSid = config.TWILIO_ACCOUNT_SID;
-// const authToken = config.TWILIO_AUTH_TOKEN;
+const accountSid = config.TWILIO_ACCOUNT_SID;
+const authToken = config.TWILIO_AUTH_TOKEN;
 
-// const client = require('twilio')(accountSid, authToken);
+const client = require('twilio')(accountSid, authToken);
 
 const app = express()
 
@@ -27,20 +27,16 @@ app.get('/', (req, res) => {
 })
 
 app.post('/', jsonParser,(req, res) => {
-    // const shoppingList = req.body.shopping_list
-    // const phone = req.body.phone
+    const shoppingList = req.body.shopping_list
+    const phone = req.body.phone
 
-    // client.messages
-    // .create({
-    //     body: "Your shopping list from Fridge-Side is : \n\n" + shoppingList,
-    //     from: config.PHONE,
-    //     to: phone
-    // })
-    // .then(message =>  res.send(message));
-
-    console.log("hello world")
-
-    //send from twillio here
+    client.messages
+    .create({
+        body: "Your shopping list from Fridge-Side is : \n\n" + shoppingList,
+        from: config.PHONE,
+        to: phone
+    })
+    .then(message =>  res.send(message));
    
  })
 
