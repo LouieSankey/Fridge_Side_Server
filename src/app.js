@@ -22,6 +22,10 @@ app.use(morgan(morganOption))
 app.use(helmet())
 app.use(cors())
 
+app.get('/', (req, res) => {
+    console.log("hello world")
+})
+
 app.post('/', jsonParser,(req, res) => {
     // const shoppingList = req.body.shopping_list
     // const phone = req.body.phone
