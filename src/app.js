@@ -1,0 +1,50 @@
+require('dotenv').config()
+const express = require('express')
+const morgan = require('morgan')
+const cors = require('cors')
+const helmet = require('helmet')
+const { NODE_ENV } = require('./config')
+const jsonParser = express.json()
+
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const client = require('twilio')(accountSid, authToken);
+
+const app = express()
+
+const morganOption = (NODE_ENV === 'production')
+  ? 'tiny'
+  : 'common';
+
+app.use(morgan(morganOption))
+app.use(helmet())
+app.use(cors())
+
+app.post('/', jsonParser,(req, res) => {
+    const shoppingList = req.body.shopping_list
+    const phone = req.body.phone
+
+    client.messages
+    .create({
+        body: "Your shopping list from Fridge-Side is : \n\n" + shoppingList,
+        from: '+12567276597',
+        to: phone
+    })
+    .then(message =>  res.send(message));
+
+    //send from twillio here
+   
+ })
+
+  app.use(function errorHandler(error, req, res, next) {
+    let response
+        if (NODE_ENV === 'production') {
+            response = { error: { message: 'server error' } }
+        } else {
+            console.error(error)
+            response = { message: error.message, error }
+        }
+    res.status(500).json(response)
+    })
+
+module.exports = app
