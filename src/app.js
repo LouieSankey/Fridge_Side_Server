@@ -1,4 +1,4 @@
-require('dotenv').config()
+// require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
@@ -6,6 +6,10 @@ const helmet = require('helmet')
 const { NODE_ENV } = require('./config')
 const jsonParser = express.json()
 const config = require('./config')
+
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+  }
 
 const accountSid = config.TWILIO_ACCOUNT_SID;
 const authToken = config.TWILIO_AUTH_TOKEN;
